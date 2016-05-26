@@ -33,6 +33,7 @@ $(document).ready(function(){
     $("#back").click(function(){
       $("#colorSearch").fadeIn();
       $("#allSearch").fadeIn();
+      $("#random").fadeIn();
       $(".chart").hide();
       $(".header").text("");
     });
@@ -77,7 +78,7 @@ $(document).ready(function(){
     var prox = $('#prox1').val();
     var datetime = Date.parse($('#datetime1').val())/1000;
     var datetimeOg = dateFormat($('#datetime1').val(), "mmmm dS, yyyy");
-    var output = getCityAndState(zipcode);
+    getCityAndState(zipcode);
     $(".header").html(color + " Bikes Info With in " + prox + " Miles of <span id='loc'></span> Since " + datetimeOg);
     stolenBikes(color, zipcode , prox, datetime, chartdisplay);
 
@@ -86,20 +87,26 @@ $(document).ready(function(){
   $("#bike").submit(function(e){
     e.preventDefault();
     var zipcode = $('#zipcode2').val();
+    getCityAndState(zipcode);
     var sort = parseInt($('#sort').val());
     var prox = $('#prox2').val();
     var datetime = Date.parse($('#datetime2').val())/1000;
+    var datetimeOg = dateFormat($('#datetime1').val(), "mmmm dS, yyyy");
     console.log(zipcode);
     console.log(prox);
     console.log(datetime);
     console.log(arrayOfColors);
+
     if(sort === 1){
+      $(".header").html("Bikes Stolen within " + prox + " Miles of <span id='loc'></span> Since " + datetimeOg + " Sorted by Color");
       allStolenBikesByColor(zipcode, prox, datetime, arrayOfColors, chartdisplay);
     }
     else if(sort === 2){
+      $(".header").html("Bikes Stolen within " + prox + " Miles of <span id='loc'></span> Since " + datetimeOg  + " Sorted by Manufacturer");
       allStolenBikesByManu(zipcode, prox, datetime, arrayOfManu, chartdisplay);
     }
     else{
+      $(".header").html("Bikes Stolen within " + prox + " Miles of <span id='loc'></span> Since " + datetimeOg + " Sorted by Frame Type");
       allStolenBikesByMat(zipcode, prox, datetime, arrayOfMaterial, chartdisplay);
     }
 
